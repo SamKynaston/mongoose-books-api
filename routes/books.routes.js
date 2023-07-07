@@ -23,7 +23,7 @@ router.get('/find/ID/:ID', async(req,res) => {
 })
 
 router.get('/find/title/:title', async(req,res) => {
-    let book = await findBookBasedOnID(req.params.ID)
+    let book = await findBookBasedOnTitle(req.params.title)
     if (!book) {return res.status(404).json({body:"book not found!"})}
 
     return res.status(200).json({body:book})
