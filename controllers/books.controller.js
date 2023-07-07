@@ -10,7 +10,7 @@ async function findBook(IDtoFind) {
 }
 
 async function changeBookdetails(body, id) {
-    const doc = await model.findOne({displayID:id})
+    const doc = await findBook(id)
 
     for (let x in body) {
         x = x.toString()
@@ -23,6 +23,12 @@ async function changeBookdetails(body, id) {
     return doc
 }
 
+async function deleteBook(id) {
+    if (!await findBook(id)) {return false}
+    return await model.deleteOne({displayID:id}) || false
+}
+
 module.exports.createBook = createBook
 module.exports.findBook = findBook
 module.exports.changeBookdetails = changeBookdetails
+module.exports.deleteBook = deleteBook

@@ -6,6 +6,7 @@ const router = express.Router()
 const findBook = require("../controllers/books.controller").findBook
 const createBook = require("../controllers/books.controller").createBook
 const updateBook = require("../controllers/books.controller").changeBookdetails
+const deleteBook = require("../controllers/books.controller").deleteBook
 
 router.get('/:ID', async(req,res) => {
     let book = await findBook(req.params.ID)
@@ -29,7 +30,10 @@ router.patch('/:ID', async(req, res) => {
 })
 
 router.delete('/:ID', async(req, res) => {
-    
+    let status = await deleteBook(req.params.ID)
+
+    if (!status) {return res.status(500).json({body:"book not deleted!"})}
+    return res.status(200).json({body:"deleted"})
 })
 
 module.exports.router = router
