@@ -36,9 +36,14 @@ async function getAllBooks() {
     return await model.find();
 }
 
+async function deleteAllBooks() {
+    return await model.deleteMany({});
+}
+
 module.exports.createBook = createBook
 module.exports.findBookBasedOnID = findBookBasedOnID
 module.exports.findBookBasedOnTitle = findBookBasedOnTitle
 module.exports.changeBookdetails = changeBookdetails
 module.exports.deleteBook = deleteBook
 module.exports.getAllBooks = getAllBooks
+module.exports.deleteAllBooks = deleteAllBooks
