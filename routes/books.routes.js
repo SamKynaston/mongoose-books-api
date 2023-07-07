@@ -3,17 +3,32 @@ const express = require("express")
 const router = express.Router()
 
 //Controller
-const findBook = require("../controllers/books.controller").findBook
+const findBookBasedOnID = require("../controllers/books.controller").findBookBasedOnID
+const findBookBasedOnTitle = require("../controllers/books.controller").findBookBasedOnTitle
 const createBook = require("../controllers/books.controller").createBook
 const updateBook = require("../controllers/books.controller").changeBookdetails
 const deleteBook = require("../controllers/books.controller").deleteBook
+const getAllBooks = require("../controllers/books.controller").getAllBooks
 
-router.get('/:ID', async(req,res) => {
-    let book = await findBook(req.params.ID)
+router.get('/all', async(req, res) => {
+    let books = await getAllBooks()
+    return res.status(200).json({body:[books]})
+})
+
+router.get('/find/ID/:ID', async(req,res) => {
+    let book = await findBookBasedOnID(req.params.ID)
     if (!book) {return res.status(404).json({body:"book not found!"})}
 
     return res.status(200).json({body:book})
 })
+
+router.get('/find/title/:title', async(req,res) => {
+    let book = await findBookBasedOnID(req.params.ID)
+    if (!book) {return res.status(404).json({body:"book not found!"})}
+
+    return res.status(200).json({body:book})
+})
+
 
 router.post('/create', async(req,res) => {
     let newBook = await createBook(req.body)

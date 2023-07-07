@@ -5,12 +5,16 @@ async function createBook(body) {
     return await model.create(body) || false
 }
 
-async function findBook(IDtoFind) {
+async function findBookBasedOnID(IDtoFind) {
     return await model.findOne({displayID:IDtoFind}) || false
 }
 
+async function findBookBasedOnTitle(titleToFind) {
+    return await model.findOne({title:titleToFind}) || false
+}
+
 async function changeBookdetails(body, id) {
-    const doc = await findBook(id)
+    const doc = await findBookBasedOnID(id)
 
     for (let x in body) {
         x = x.toString()
@@ -24,11 +28,17 @@ async function changeBookdetails(body, id) {
 }
 
 async function deleteBook(id) {
-    if (!await findBook(id)) {return false}
+    if (!await findBookBasedOnID(id)) {return false}
     return await model.deleteOne({displayID:id}) || false
 }
 
+async function getAllBooks() {
+    return await model.find();
+}
+
 module.exports.createBook = createBook
-module.exports.findBook = findBook
+module.exports.findBookBasedOnID = findBookBasedOnID
+module.exports.findBookBasedOnTitle = findBookBasedOnTitle
 module.exports.changeBookdetails = changeBookdetails
 module.exports.deleteBook = deleteBook
+module.exports.getAllBooks = getAllBooks
